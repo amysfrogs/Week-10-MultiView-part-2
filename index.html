@@ -3,11 +3,11 @@
     <head>
         <meta charset = 'UTF-8'>
         <title>Major Assignment 3</title>
-        <script src = '/lib/d3.js'></script>
+        <script src = './lib/d3.js'></script>
         <script src="scatter_plot_aw.js?2"></script>
         <script src="bar_plot_aw.js?2"></script>
 
-        <link rel = "stylesheet" href = "../styles/style.css">
+    
         <style>
             .fig {
                 fill: #faf8f8;
@@ -26,11 +26,42 @@
             body{
                 font-family: sans-serif;
                 margin: auto;
-                width: 50%;
+                width: 60%;
             }
             h1{
                 text-align: center;
             }
+            #fig{
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 20px;
+                width: 90vw;
+            }
+            .xAxis{
+                font-family: sans-serif;
+                font-size: 20pt;
+            }
+            .yAxis{
+                font-family: sans-serif;
+                font-size: 20pt;
+            }
+
+            .axis{
+                font-size: 30pt;
+            }
+            .bars{
+                fill-opacity: .7;
+
+            }
+            text.label{
+                font-family: sans-serif;
+                font-size: 32pt;
+                }
+                text.plotTitle{
+                    font-family: sans-serif;
+                    font-size: 32pt;
+                }
             
         </style>
 
@@ -76,21 +107,61 @@
             d3.tsv(penguin_data).then(main)
 
             //Subplots
-            let fig_main = d3.select('#main')
+            let fig_main_A = d3.select('#mainA')
                 .append('g')
                 .append('rect')
                 .attr('class', 'fig')
                 .attr('width', '100%')
                 .attr('height', '100%')
             //top svg
-            let fig_top = d3.select('#top')
+            let fig_top_A = d3.select('#topA')
                 .append('g')
                 .append('rect')
                 .attr('class', 'fig')
                 .attr('width', '100%')
                 .attr('height', '100%')
             //right svg
-            let fig_right = d3.select('#right')
+            let fig_right_A = d3.select('#rightA')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            let fig_main_B = d3.select('#mainB')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            //top svg
+            let fig_top_B = d3.select('#topB')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            //right svg
+            let fig_right_B = d3.select('#rightB')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            let fig_main_C = d3.select('#mainC')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            //top svg
+            let fig_top_C = d3.select('#topC')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            //right svg
+            let fig_right_C = d3.select('#rightC')
                 .append('g')
                 .append('rect')
                 .attr('class', 'fig')
