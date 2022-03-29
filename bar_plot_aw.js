@@ -4,12 +4,14 @@ function bar_plot_aw(Values,
                     title = '',
                     xLabel = '',
                     yLabel = '',
-                    margin = 80
+                    margin = 50
 )
 {
     let axis = d3.select(`#${axis_key}`)
     let height = parseInt(axis.attr('height'));
     let width = parseInt(axis.attr('width'))-margin;
+
+    let valMax = d3.max(Values)
 
     //make linear scale for xAxis
     let xScale = d3.scaleLinear()
@@ -17,9 +19,9 @@ function bar_plot_aw(Values,
         .range([margin, width]);
     //make bins and the values for each bin
     let histogram = d3.histogram()
-        .value(function(d) {return d})
         .domain(xScale.domain())
-        .thresholds(xScale.ticks(bins_count+1));
+        .value(function(d) {return d})
+        .thresholds(bins_count);
 
     let bins = histogram(Values);
 
@@ -38,7 +40,7 @@ function bar_plot_aw(Values,
             return `translate(${xScale(d.x1)}, ${yScale(d.length)})`;})
         .append('rect')
         .attr('width', function (d) {
-            return ((width-margin)/(bins_count*1.6));})
+            return ((width-margin)/(bins_count)*0.6);})
         .attr('height', function (d) {
             return height - yScale(d.length);})
         .style('fill', '#509ec8')
@@ -64,7 +66,7 @@ function h_bar_plot_aw(Values,
     let histogram = d3.histogram()
         .value(function (d) {return d})
         .domain(yScale.domain())
-        .thresholds(yScale.ticks(bins_count+1));
+        .thresholds(bins_count);
 
     let bins = histogram(Values);
 

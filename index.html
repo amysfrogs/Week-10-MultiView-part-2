@@ -15,7 +15,7 @@
             table {
                 border: 1px solid #d2bcbc;
                 border-collapse: collapse;
-                width: 60vw;
+                width: 50vw;
             }
             td {
                 border: 1px solid #d2bcbc;
@@ -26,10 +26,14 @@
             body{
                 font-family: sans-serif;
                 margin: auto;
-                width: 60%;
+                width: 50vw;
             }
-            h1{
+            h1, h2, div{
                 text-align: center;
+            }
+            h3 {
+                text-align: center;
+                font-size: small;
             }
             #fig{
                 display: block;
@@ -46,7 +50,6 @@
                 font-family: sans-serif;
                 font-size: 20pt;
             }
-
             .axis{
                 font-size: 30pt;
             }
@@ -58,10 +61,10 @@
                 font-family: sans-serif;
                 font-size: 32pt;
                 }
-                text.plotTitle{
-                    font-family: sans-serif;
-                    font-size: 32pt;
-                }
+            text.plotTitle{
+                font-family: sans-serif;
+                font-size: 32pt;
+            }
             
         </style>
 
@@ -70,7 +73,6 @@
         <h1> 
             Penguin Data, Separated by Species
         </h1>
-        
         <table>
             <tr>
                 <td><svg width="500px" height="150px"  id="topA"></svg></td>
@@ -101,6 +103,9 @@
                 <td><svg width="150px" height="500px" id="rightC"></svg></td>
             </tr>
         </table>
+        <h3>
+            Amy Westell
+        </h3>
         
         <script>
             let penguin_data = "./data/palmer_penguin_species.tsv";
@@ -174,6 +179,8 @@
                 chartOneSpecies(data,'Gentoo', 'B')
                 chartOneSpecies(data,'Chinstrap', 'C')
             }
+
+            
 
             function chartOneSpecies(data, speciesName, chartId) {
                 let oneSpeciesData = data.filter(function (d) {return d.species === speciesName})
