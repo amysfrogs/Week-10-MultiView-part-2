@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+    <head>
+        <meta charset = 'UTF-8'>
+        <title>Major Assignment 3</title>
+        <script src = '/lib/d3.js'></script>
+        <script src="scatter_plot_aw.js?2"></script>
+        <script src="bar_plot_aw.js?2"></script>
+
+        <link rel = "stylesheet" href = "../styles/style.css">
+        <style>
+            .fig {
+                fill: #faf8f8;
+            }
+            table {
+                border: 1px solid #d2bcbc;
+                border-collapse: collapse;
+                width: 60vw;
+            }
+            td {
+                border: 1px solid #d2bcbc;
+                border-collapse: collapse;
+                padding: 10px;
+                width: 10vw;
+            }
+            body{
+                font-family: sans-serif;
+                margin: auto;
+                width: 50%;
+            }
+            h1{
+                text-align: center;
+            }
+            
+        </style>
+
+    </head>
+    <body>
+        <h1> 
+            Penguin Data, Separated by Species
+        </h1>
+        
+        <table>
+            <tr>
+                <td><svg width="500px" height="150px"  id="topA"></svg></td>
+                <td width="10%">&nbsp</td>
+            </tr>
+            <tr>
+                <td><svg width="500px" height="500px" viewBox="0 0 1000 1000" id="mainA"></svg></td>
+                <td><svg width="150px" height="500px" id="rightA"></svg></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><svg width="500px" height="150px"  id="topB"></svg></td>
+                <td width="10%">&nbsp</td>
+            </tr>
+            <tr>
+                <td><svg width="500px" height="500px" viewBox="0 0 1000 1000" id="mainB"></svg></td>
+                <td><svg width="150px" height="500px" id="rightB"></svg></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><svg width="500px" height="150px"  id="topC"></svg></td>
+                <td width="10%">&nbsp</td>
+            </tr>
+            <tr>
+                <td><svg width="500px" height="500px" viewBox="0 0 1000 1000" id="mainC"></svg></td>
+                <td><svg width="150px" height="500px" id="rightC"></svg></td>
+            </tr>
+        </table>
+        
+        <script>
+            let penguin_data = "./data/palmer_penguin_species.tsv";
+            d3.tsv(penguin_data).then(main)
+
+            //Subplots
+            let fig_main = d3.select('#main')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            //top svg
+            let fig_top = d3.select('#top')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            //right svg
+            let fig_right = d3.select('#right')
+                .append('g')
+                .append('rect')
+                .attr('class', 'fig')
+                .attr('width', '100%')
+                .attr('height', '100%')
+            
+
+            function main(data) {
+                chartOneSpecies(data,'Adelie', 'A')
+                chartOneSpecies(data,'Gentoo', 'B')
+                chartOneSpecies(data,'Chinstrap', 'C')
+            }
+
+            function chartOneSpecies(data, speciesName, chartId) {
+                let oneSpeciesData = data.filter(function (d) {return d.species === speciesName})
+                
+                //fetch data
+                let culmen_length = d3.map(oneSpeciesData, function (d) { return +d.culmen_length_mm})
+                let culmen_depth = d3.map(oneSpeciesData, function (d) { return +d.culmen_depth_mm})
+                let flipper_length = d3.map(oneSpeciesData, function (d) {return +d.flipper_length_mm})
+                let species = d3.map(oneSpeciesData, function(d) { return d.species})
+                
+                
+                let island = d3.map(data, function(d) { return d.island})
+                let island_types = new Set(island)
+
+                let island_code = d3.map(data, function(d) {
+                    island = d.island
+                    if (island === 'Torgersen') {
+                        return 0
+                    }
+                    else if (island === 'Biscoe') {
+                        return 1
+                    }
+                    else {
+                        return 2
+                    }
+                })
+
+                //main svg
+                scatter_plot_aw (culmen_length, 
+                    culmen_depth, 
+                    flipper_length, 
+                    island_code,
+                    `main${chartId}`, 
+                    title = `${speciesName} Penguins`, 
+                    xLabel = 'culmen_length_mm', 
+                    yLabel = 'culmen_depth_mm');
+                //side plots
+                bar_plot_aw(culmen_length, 10, `top${chartId}`)
+                h_bar_plot_aw(culmen_depth, 10, `right${chartId}`)
+
+            }
+                
+        </script>
+
+    </body>
+</html>
